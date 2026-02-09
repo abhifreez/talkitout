@@ -1,0 +1,578 @@
+---
+globs:
+alwaysApply: false
+---
+
+
+
+
+# Forseen Health Care - Development Guidelines
+
+## Project Overview
+
+**Forseen Health Care** is a luxury longevity healthcare advisory platform built with modern web technologies. The application emphasizes elegant design, smooth animations, and executive-focused user experience.
+
+### Tech Stack
+- **Framework**: React 18.3+ with TypeScript
+- **Build Tool**: Vite 5.4+
+- **Styling**: Tailwind CSS 3.4+ with custom design system
+- **UI Components**: shadcn/ui (Radix UI primitives)
+- **Animation Libraries**: 
+  - GSAP 3.14+ with ScrollTrigger plugin
+  - Framer Motion 12.29+ for component animations
+- **Routing**: React Router DOM 6.30+
+- **Form Management**: React Hook Form 7.61+ with Zod validation
+- **State Management**: React Query (TanStack Query) 5.83+
+- **Fonts**: Cormorant Garamond (headings), Inter (body)
+
+---
+
+## Code Organization Principles
+
+### Component Structure
+- **One component per file**: Each component must be in its own file
+- **Functional components only**: No class components
+- **Small, focused components**: Follow Single Responsibility Principle (SRP)
+- **Component location**: Place components in `src/components/`
+- **UI primitives**: shadcn/ui components go in `src/components/ui/`
+- **Custom hooks**: Place reusable hooks in `src/hooks/`
+- **Utilities**: Shared utilities in `src/lib/`
+
+### File Naming Conventions
+- **Components**: PascalCase (e.g., `HeroSection.tsx`, `Header.tsx`)
+- **Hooks**: camelCase with `use-` prefix (e.g., `use-mobile.tsx`, `use-toast.ts`)
+- **Utilities**: camelCase (e.g., `utils.ts`)
+- **Pages**: PascalCase (e.g., `Index.tsx`, `NotFound.tsx`)
+- **Types/Interfaces**: PascalCase (e.g., `User.ts`, `ApiResponse.ts`)
+
+### Import/Export Patterns
+- **Default exports**: Use for pages and main App component
+- **Named exports**: Use for all other components and utilities
+- **Path aliases**: Use `@/` prefix for imports from `src/` (e.g., `@/components/Header`)
+- **Import order**: 
+  1. React and React-related imports
+  2. Third-party libraries
+  3. GSAP and animation libraries
+  4. UI components (shadcn/ui)
+  5. Local components
+  6. Utilities and hooks
+  7. Types
+  8. Assets
+
+```typescript
+// ✅ Good import order
+import { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Heart, Brain } from 'lucide-react';
+import { Header } from '@/components/Header';
+import { cn } from '@/lib/utils';
+import heroImage from '@/assets/hero-mountains.jpg';
+```
+
+---
+
+## TypeScript Guidelines
+
+### Type Safety
+- **Strict typing**: Use explicit types for props, state, and function parameters
+- **Avoid `any`**: Use `unknown` or proper types instead
+- **Interface over type**: Prefer interfaces for object shapes
+- **Type inference**: Let TypeScript infer types when obvious, but be explicit for public APIs
+
+### Component Props
+- **Define prop types**: Always define interfaces for component props
+- **Optional props**: Mark optional props with `?`
+- **Default props**: Use default parameters instead of defaultProps
+
+```typescript
+// ✅ Good prop definition
+interface HeroSectionProps {
+  title: string;
+  subtitle?: string;
+  onScroll?: () => void;
+}
+
+export const HeroSection = ({ title, subtitle, onScroll }: HeroSectionProps) => {
+  // Component implementation
+};
+```
+
+### Refs and DOM Elements
+- **Typed refs**: Always type refs with proper HTML element types
+- **Null checks**: Always check for null before accessing ref.current
+
+```typescript
+// ✅ Good ref usage
+const headlineRef = useRef<HTMLHeadingElement>(null);
+const containerRef = useRef<HTMLDivElement>(null);
+
+useEffect(() => {
+  if (headlineRef.current) {
+    // Safe to use
+  }
+}, []);
+```
+
+---
+
+## Styling Conventions
+
+### Tailwind CSS Usage
+- **Utility-first**: Prefer Tailwind utilities over custom CSS
+- **Responsive design**: Use breakpoint prefixes (`md:`, `lg:`) consistently
+- **Design tokens**: Use CSS custom properties from `index.css` for colors
+- **Custom classes**: Use `@layer components` in `index.css` for reusable patterns
+
+### Design System Classes
+The following custom classes are available and should be used:
+
+- **`.glass-card`**: Glassmorphism card with hover effects
+- **`.btn-elegant`**: Elegant button with hover animations
+- **`.section-padding`**: Consistent section padding (responsive)
+- **`.elegant-underline`**: Animated underline on hover
+- **`.header-blur`**: Backdrop blur for header
+- **`.text-gradient`**: Text with gradient effect
+- **`.horizontal-scroll-container`**: Container for horizontal scrolling
+
+### Color System
+- **Use HSL variables**: Always use `hsl(var(--variable))` format
+- **Color tokens**: Use semantic color names (e.g., `bg-background`, `text-foreground`, `border-accent`)
+- **Opacity**: Use Tailwind opacity utilities (e.g., `text-foreground/60`)
+
+### Typography
+- **Headings**: Use `font-heading` class (Cormorant Garamond)
+- **Body text**: Use `font-body` class (Inter)
+- **Letter spacing**: Use `tracking-wide` or `tracking-[0.2em]` for headings
+- **Font weights**: Use `font-light` (300) for luxury aesthetic
+
+### Spacing and Layout
+- **Section padding**: Use `.section-padding` class for consistent spacing
+- **Container max-width**: Use `max-w-6xl` or `max-w-7xl` with `mx-auto` for content containers
+- **Responsive padding**: Use `px-6 md:px-12 lg:px-24` pattern
+
+```typescript
+// ✅ Good styling pattern
+<section className="section-padding bg-secondary">
+  <div className="max-w-6xl mx-auto">
+    <h2 className="font-heading text-3xl md:text-5xl lg:text-6xl font-light text-center mb-16">
+      Section Title
+    </h2>
+  </div>
+</section>
+```
+
+---
+
+## Animation Patterns
+
+### GSAP Usage
+- **Register plugins**: Always register GSAP plugins at the top of files that use them
+- **Use gsap.context()**: Always wrap GSAP animations in `gsap.context()` for proper cleanup
+- **Cleanup**: Always return cleanup function from `useEffect` that calls `ctx.revert()`
+- **ScrollTrigger**: Use for scroll-based animations with proper trigger points
+
+```typescript
+// ✅ Good GSAP pattern
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
+
+export const Component = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const elementRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        elementRef.current,
+        { opacity: 0, y: 50 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          scrollTrigger: {
+            trigger: elementRef.current,
+            start: 'top 80%',
+            toggleActions: 'play none none reverse',
+          },
+        }
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section ref={sectionRef}>
+      <div ref={elementRef}>Content</div>
+    </section>
+  );
+};
+```
+
+### ScrollTrigger Best Practices
+- **Trigger points**: Use `'top 80%'` or `'top 70%'` for consistent entry points
+- **Toggle actions**: Use `'play none none reverse'` for smooth scroll behavior
+- **Horizontal scroll**: Use `pin: true` and `scrub: 1` for horizontal scroll sections
+- **Stagger animations**: Use `stagger` property for sequential animations
+
+### Framer Motion Usage
+- **AnimatePresence**: Use for exit animations
+- **Motion components**: Use `motion.div`, `motion.button`, etc. for animated elements
+- **Initial/animate/exit**: Define clear animation states
+
+```typescript
+// ✅ Good Framer Motion pattern
+import { motion, AnimatePresence } from 'framer-motion';
+
+<AnimatePresence>
+  {isOpen && (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      Content
+    </motion.div>
+  )}
+</AnimatePresence>
+```
+
+### Animation Philosophy
+- **Subtle and elegant**: Animations should enhance, not distract
+- **Purposeful**: Every animation should serve a purpose
+- **Performance**: Use `will-change` sparingly, prefer GPU-accelerated properties
+- **Duration**: Use 0.5s-1s for most transitions, longer for complex animations
+
+---
+
+## Component Structure Standards
+
+### Component Template
+```typescript
+import { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
+
+interface ComponentProps {
+  title: string;
+  optional?: string;
+}
+
+export const Component = ({ title, optional }: ComponentProps) => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const elementRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // GSAP animations here
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section ref={sectionRef} className="section-padding">
+      <div ref={elementRef}>
+        {/* Component content */}
+      </div>
+    </section>
+  );
+};
+```
+
+### Section Components
+- **Use semantic HTML**: Always use `<section>` for major sections
+- **ID attributes**: Add `id` attribute for anchor navigation (e.g., `id="hero"`)
+- **Refs for animations**: Use refs for elements that need GSAP animations
+- **Container divs**: Use container divs with max-width for content centering
+
+### Interactive Elements
+- **Hover effects**: Use CSS classes like `group` and `group-hover:` for hover states
+- **Mouse tracking**: Use CSS custom properties for dynamic effects (e.g., `--mouse-x`, `--mouse-y`)
+- **Transitions**: Always include `transition-*` classes for smooth state changes
+
+```typescript
+// ✅ Good interactive element pattern
+<div
+  className="glass-card group cursor-default"
+  onMouseMove={(e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    setMousePos({ x, y });
+  }}
+  style={{
+    '--mouse-x': `${mousePos.x}%`,
+    '--mouse-y': `${mousePos.y}%`,
+  } as React.CSSProperties}
+>
+  Content
+</div>
+```
+
+---
+
+## State Management
+
+### Local State
+- **useState**: Use for component-local state
+- **useRef**: Use for DOM references and values that don't trigger re-renders
+- **Avoid prop drilling**: Use Context API or state management library for shared state
+
+### React Query
+- **Server state**: Use React Query for all server state management
+- **Query keys**: Use descriptive, hierarchical query keys
+- **Mutations**: Use mutations for data modifications
+
+### Context API
+- **Theme context**: Use `next-themes` for theme management
+- **Custom contexts**: Create contexts for shared application state
+
+---
+
+## Form Patterns
+
+### React Hook Form
+- **Form validation**: Use Zod schemas with `@hookform/resolvers`
+- **Form state**: Use `useForm` hook from react-hook-form
+- **Error handling**: Display validation errors clearly
+
+```typescript
+// ✅ Good form pattern
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+
+const formSchema = z.object({
+  name: z.string().min(1, 'Name is required'),
+  email: z.string().email('Invalid email address'),
+});
+
+export const ContactForm = () => {
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: zodResolver(formSchema),
+  });
+
+  const onSubmit = (data: z.infer<typeof formSchema>) => {
+    // Handle submission
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      {/* Form fields */}
+    </form>
+  );
+};
+```
+
+### Form Styling
+- **Minimal design**: Use border-bottom style for inputs (luxury aesthetic)
+- **Labels**: Use uppercase, tracking-wide labels
+- **Focus states**: Use accent color for focus states
+- **Placeholders**: Use subtle, descriptive placeholders
+
+---
+
+## Performance Optimization
+
+### Code Splitting
+- **Lazy loading**: Use `React.lazy()` for route-based code splitting
+- **Dynamic imports**: Use dynamic imports for heavy dependencies
+
+### Image Optimization
+- **Optimize images**: Compress and optimize all images before use
+- **Lazy loading**: Use `loading="lazy"` for below-the-fold images
+- **Responsive images**: Use `srcset` for responsive images when needed
+
+### Animation Performance
+- **GPU acceleration**: Use `transform` and `opacity` for animations
+- **Will-change**: Use sparingly, only for elements that will animate
+- **Debounce scroll**: Debounce scroll event handlers when needed
+
+### Bundle Size
+- **Tree shaking**: Import only what you need from libraries
+- **Avoid large dependencies**: Prefer lightweight alternatives
+- **Analyze bundle**: Regularly check bundle size with build tools
+
+---
+
+## Accessibility
+
+### Semantic HTML
+- **Use proper elements**: Use `<nav>`, `<main>`, `<section>`, `<article>`, etc.
+- **ARIA labels**: Add ARIA labels for interactive elements without text
+- **Alt text**: Always include descriptive alt text for images
+
+### Keyboard Navigation
+- **Focus states**: Ensure all interactive elements have visible focus states
+- **Tab order**: Maintain logical tab order
+- **Skip links**: Consider adding skip links for main content
+
+### Screen Readers
+- **Headings hierarchy**: Use proper heading hierarchy (h1 → h2 → h3)
+- **Form labels**: Always associate labels with form inputs
+- **Live regions**: Use ARIA live regions for dynamic content updates
+
+---
+
+## Testing Guidelines
+
+### Test Structure
+- **Test files**: Place test files next to components or in `src/test/`
+- **Naming**: Use `.test.ts` or `.test.tsx` extension
+- **Setup**: Use Vitest with React Testing Library
+
+### Test Patterns
+- **Component tests**: Test component rendering and user interactions
+- **Hook tests**: Test custom hooks in isolation
+- **Utility tests**: Test utility functions with various inputs
+
+```typescript
+// ✅ Good test pattern
+import { render, screen } from '@testing-library/react';
+import { describe, it, expect } from 'vitest';
+import { HeroSection } from './HeroSection';
+
+describe('HeroSection', () => {
+  it('renders the headline', () => {
+    render(<HeroSection />);
+    expect(screen.getByText(/The Future of Your Health/i)).toBeInTheDocument();
+  });
+});
+```
+
+---
+
+## Code Quality
+
+### ESLint and Prettier
+- **Follow linting rules**: Fix all ESLint warnings and errors
+- **Format code**: Use Prettier for consistent code formatting
+- **Pre-commit hooks**: Use Husky for pre-commit linting and formatting
+
+### Code Review Checklist
+- [ ] Component follows naming conventions
+- [ ] TypeScript types are properly defined
+- [ ] GSAP animations use context and cleanup
+- [ ] Tailwind classes follow design system
+- [ ] Responsive design is implemented
+- [ ] Accessibility considerations are met
+- [ ] Performance optimizations are applied
+- [ ] Code is properly commented where needed
+
+### Comments
+- **Self-documenting code**: Write code that explains itself
+- **Complex logic**: Comment complex algorithms or business logic
+- **TODOs**: Use `// TODO:` for future improvements
+- **Avoid**: Don't comment obvious code
+
+---
+
+## Git Workflow
+
+### Commit Messages
+- **Conventional commits**: Use conventional commit format
+- **Descriptive**: Write clear, descriptive commit messages
+- **Scope**: Include component or feature name in scope
+
+### Branch Strategy
+- **Main branch**: Keep `main` branch stable and deployable
+- **Feature branches**: Create branches for new features
+- **Naming**: Use descriptive branch names (e.g., `feature/contact-form-validation`)
+
+---
+
+## Common Patterns
+
+### Scroll to Section
+```typescript
+const scrollToSection = (href: string) => {
+  const element = document.querySelector(href);
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth' });
+  }
+};
+```
+
+### Scroll Detection
+```typescript
+const [isScrolled, setIsScrolled] = useState(false);
+
+useEffect(() => {
+  const handleScroll = () => {
+    setIsScrolled(window.scrollY > 50);
+  };
+  window.addEventListener('scroll', handleScroll);
+  return () => window.removeEventListener('scroll', handleScroll);
+}, []);
+```
+
+### Glass Card with Hover Effect
+```typescript
+<div className="glass-card p-8 group">
+  {/* Content with hover effects using group-hover: */}
+</div>
+```
+
+### Responsive Typography
+```typescript
+<h2 className="font-heading text-3xl md:text-5xl lg:text-6xl font-light">
+  Responsive Heading
+</h2>
+```
+
+---
+
+## Design System Reference
+
+### Colors
+- **Background**: `bg-background` (Ivory: `hsl(40 33% 97%)`)
+- **Foreground**: `text-foreground` (Charcoal: `hsl(220 15% 15%)`)
+- **Accent**: `text-accent` (Gold: `hsl(38 45% 52%)`)
+- **Muted**: `text-muted-foreground` (Gray: `hsl(220 10% 45%)`)
+
+### Typography Scale
+- **Hero**: `text-4xl md:text-6xl lg:text-7xl xl:text-8xl`
+- **Section Headings**: `text-3xl md:text-5xl lg:text-6xl`
+- **Card Titles**: `text-2xl md:text-3xl`
+- **Body**: `text-lg md:text-xl`
+- **Small**: `text-sm`
+
+### Spacing
+- **Section Padding**: `.section-padding` (responsive: `py-24 md:py-32 lg:py-40`)
+- **Container Padding**: `px-6 md:px-12 lg:px-24`
+- **Gap**: `gap-6 md:gap-8` for grids
+
+---
+
+## Best Practices Summary
+
+1. **Modularity**: Keep components small and focused
+2. **Type Safety**: Use TypeScript types throughout
+3. **Consistency**: Follow established patterns and conventions
+4. **Performance**: Optimize animations and bundle size
+5. **Accessibility**: Ensure all users can use the application
+6. **Responsive**: Design for all screen sizes
+7. **Clean Code**: Write readable, maintainable code
+8. **Documentation**: Comment complex logic and decisions
+
+---
+
+## Resources
+
+- **Tailwind CSS**: https://tailwindcss.com/docs
+- **GSAP**: https://greensock.com/docs/
+- **Framer Motion**: https://www.framer.com/motion/
+- **shadcn/ui**: https://ui.shadcn.com/
+- **React Hook Form**: https://react-hook-form.com/
+- **TypeScript**: https://www.typescriptlang.org/docs/
+
+---
+
+*Last updated: Based on codebase analysis of Forseen Health Care platform*
