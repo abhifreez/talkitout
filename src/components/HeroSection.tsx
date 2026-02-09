@@ -74,22 +74,22 @@ export const HeroSection = () => {
             className="font-heading text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-light tracking-wide mb-8 leading-tight drop-shadow-lg"
             style={{ textShadow: '0 2px 20px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.2)', paddingTop: '40px' }}
           >
-            The Future of Your Health, Foreseen.
+            Your Mental Wellness Matters.
           </h1>
           <p
             ref={subtextRef}
             className="font-body text-lg md:text-xl lg:text-2xl font-light text-foreground/90 max-w-3xl mx-auto leading-relaxed opacity-0 drop-shadow-md"
             style={{ textShadow: '0 2px 15px rgba(0, 0, 0, 0.4), 0 0 30px rgba(0, 0, 0, 0.3)' }}
           >
-            High-performance living, engineered for the long arc. We move beyond medicine 
-            as a repair shop and into medicine as a strategic advantage.
+            Connect with professional psychologists for free consultations. 
+            Get the support you need, when you need it. Your journey to better mental health starts here.
           </p>
           <div ref={ctaRef} className="opacity-0" style={{ padding: '40px' }}>
             <CalendlyButton 
               url={CALENDLY_URL}
               variant="primary"
             >
-              Schedule Your Consultation
+              Book Your Free Consultation
             </CalendlyButton>
           </div>
         </div>

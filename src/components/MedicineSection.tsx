@@ -1,15 +1,15 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Heart, Brain, Dna, Flame } from 'lucide-react';
+import { Users, Lightbulb, Shield, Heart } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const horsemen = [
-  { icon: Heart, label: 'Cardiovascular', description: 'The Heart' },
-  { icon: Brain, label: 'Neurodegeneration', description: 'The Mind' },
-  { icon: Dna, label: 'Cancer', description: 'The Cell' },
-  { icon: Flame, label: 'Metabolic Dysfunction', description: 'The Fuel' },
+const benefits = [
+  { icon: Users, label: 'Community Support', description: 'You\'re Not Alone' },
+  { icon: Lightbulb, label: 'Professional Guidance', description: 'Expert Care' },
+  { icon: Shield, label: 'Safe Space', description: 'Confidential' },
+  { icon: Heart, label: 'Compassionate', description: 'Non-Judgmental' },
 ];
 
 export const MedicineSection = () => {
@@ -82,7 +82,7 @@ export const MedicineSection = () => {
 
   return (
     <section
-      id="medicine"
+      id="about"
       ref={sectionRef}
       className="section-padding bg-secondary"
     >
@@ -92,13 +92,13 @@ export const MedicineSection = () => {
           ref={headlineRef}
           className="font-heading text-3xl md:text-5xl lg:text-6xl font-light text-center mb-16 md:mb-24"
         >
-          From Reactive Repair to<br />Strategic Optimization.
+          Mental Health Support<br />Should Be Accessible.
         </h2>
 
         {/* Story */}
         <p className="font-body text-lg md:text-xl text-center text-muted-foreground max-w-3xl mx-auto mb-16">
-          Medicine 2.0 is designed to keep you from dying today. 
-          Medicine 3.0 is designed to keep you thriving at 95.
+          We believe that everyone deserves access to professional psychological support, 
+          regardless of financial circumstances. Mental wellness is a fundamental right, not a luxury.
         </p>
 
         {/* Interactive Comparison */}
@@ -106,38 +106,38 @@ export const MedicineSection = () => {
           ref={comparisonRef}
           className="grid md:grid-cols-2 gap-8 md:gap-16 mb-24 md:mb-32"
         >
-          {/* Medicine 2.0 */}
+          {/* Traditional Barriers */}
           <div className="comparison-item text-center md:text-right p-8 md:p-12">
             <h3 className="font-heading text-2xl md:text-3xl mb-6 medicine-old">
-              Medicine 2.0
+              Traditional Barriers
             </h3>
             <ul className="space-y-4 font-body text-lg medicine-old">
-              <li>Treats disease</li>
-              <li>Focuses on averages</li>
-              <li>Reactive</li>
+              <li>High costs</li>
+              <li>Limited availability</li>
+              <li>Social stigma</li>
             </ul>
           </div>
 
-          {/* Medicine 3.0 */}
+          {/* TalkItOut Approach */}
           <div className="comparison-item text-center md:text-left p-8 md:p-12 border-l-0 md:border-l border-accent/30">
             <h3 className="font-heading text-2xl md:text-3xl mb-6 text-accent">
-              Medicine 3.0
+              TalkItOut Approach
             </h3>
             <ul className="space-y-4 font-body text-lg">
-              <li>Prevents decline</li>
-              <li>Focuses on you</li>
-              <li>Proactive</li>
+              <li>Completely free</li>
+              <li>Easy to book</li>
+              <li>Safe and confidential</li>
             </ul>
           </div>
         </div>
 
-        {/* The Four Horsemen */}
+        {/* Core Values */}
         <div className="text-center mb-12">
           <h3 className="font-heading text-2xl md:text-3xl font-light mb-4">
-            The Four Horsemen
+            Why Choose TalkItOut
           </h3>
           <p className="font-body text-muted-foreground">
-            The killers we hold at bay
+            Professional support designed with you in mind
           </p>
         </div>
 
@@ -145,7 +145,7 @@ export const MedicineSection = () => {
           ref={horsemenRef}
           className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8"
         >
-          {horsemen.map(({ icon: Icon, label, description }) => (
+          {benefits.map(({ icon: Icon, label, description }) => (
             <div
               key={label}
               className="horseman-item flex flex-col items-center text-center p-6 md:p-8 glass-card group"

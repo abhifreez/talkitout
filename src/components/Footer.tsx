@@ -10,20 +10,20 @@ export const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-8">
           <div className="text-center md:text-left">
             <span className="font-heading text-lg tracking-[0.2em]">
-              FORSEEN HEALTH CARE
+              TalkItOut
             </span>
             <span className="hidden md:inline mx-4 text-muted-foreground">|</span>
             <span className="block md:inline font-body text-sm text-muted-foreground mt-1 md:mt-0">
-              Private Longevity Advisory
+              Free Psychology Consultations
             </span>
           </div>
 
           <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
             <CalendlyButton url={CALENDLY_URL} variant="primary" className="!text-sm">
-              Book a Consultation
+              Book Free Consultation
             </CalendlyButton>
             <span className="font-body text-sm text-muted-foreground hidden sm:inline">
-              Science-Backed. Executive-Minded.
+              Professional. Confidential. Free.
             </span>
           </div>
         </div>
@@ -39,15 +39,15 @@ export const Footer = () => {
           <span>{HEAD_OFFICE}</span>
           <span className="hidden sm:inline text-border">|</span>
           <CalendlyButton url={CALENDLY_URL} variant="secondary" className="!text-sm">
-            Book a Consultation
+            Book Free Consultation
           </CalendlyButton>
         </div>
 
         <div className="text-center border-t border-border pt-8">
           <p className="font-body text-xs text-muted-foreground leading-relaxed max-w-3xl mx-auto">
-            © 2026 Forseen Health Care. All rights reserved. Forseen Health Care does not provide emergency 
-            medical services. We are your strategic health partners, focused on prevention, 
-            optimization, and longevity.
+            © 2026 TalkItOut. All rights reserved. TalkItOut provides professional psychology consultations 
+            for informational and support purposes. For mental health emergencies, please contact your local 
+            emergency services or crisis hotline immediately.
           </p>
         </div>
       </div>

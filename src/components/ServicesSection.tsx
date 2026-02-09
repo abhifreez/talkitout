@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Microscope, Map, Users } from 'lucide-react';
+import { Heart, MessageCircle, Shield } from 'lucide-react';
 import { CalendlyButton } from './CalendlyButton';
 import { CALENDLY_URL } from '@/lib/constants';
 
@@ -9,19 +9,19 @@ gsap.registerPlugin(ScrollTrigger);
 
 const services = [
   {
-    icon: Microscope,
-    title: 'Deep Diagnostics',
-    description: 'We look where others don\'t. From your ApoB levels to full-genome sequencing and VO2 Max testing.',
+    icon: MessageCircle,
+    title: 'Free Consultations',
+    description: 'Connect with licensed psychology professionals at no cost. We believe mental health support should be accessible to everyone.',
   },
   {
-    icon: Map,
-    title: 'The Roadmap',
-    description: 'Data is useless without a plan. We design your tactical nutrition, exercise biochemistry, and pharmacotherapy protocols.',
+    icon: Heart,
+    title: 'Compassionate Care',
+    description: 'Our experienced psychologists provide a safe, non-judgmental space where you can openly discuss your concerns and feelings.',
   },
   {
-    icon: Users,
-    title: 'Persistent Counsel',
-    description: 'Ongoing guidance for the high-level executive. We adjust your strategy as the science—and your life—evolves.',
+    icon: Shield,
+    title: 'Confidential & Secure',
+    description: 'Your privacy is our priority. All consultations are completely confidential and conducted in a secure environment.',
   },
 ];
 
@@ -72,7 +72,7 @@ export const ServicesSection = () => {
         {/* Headline */}
         <div className="text-center mb-16 md:mb-24">
           <h2 className="font-heading text-3xl md:text-5xl lg:text-6xl font-light mb-6">
-            Your Personal Health Architect.
+            Professional Support, Freely Available.
           </h2>
         </div>
 
@@ -109,10 +109,10 @@ export const ServicesSection = () => {
         {/* Consultation CTA */}
         <div className="mt-16 md:mt-24 text-center">
           <p className="font-body text-lg md:text-xl text-muted-foreground mb-6 max-w-2xl mx-auto">
-            Ready to build your personal health roadmap? Speak with our team.
+            Ready to take the first step toward better mental wellness? Connect with a professional today.
           </p>
           <CalendlyButton url={CALENDLY_URL} variant="primary">
-            Book a Consultation
+            Schedule Your Free Consultation
           </CalendlyButton>
         </div>
       </div>

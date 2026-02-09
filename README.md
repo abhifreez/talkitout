@@ -1,73 +1,125 @@
-# Welcome to your Lovable project
+# TalkItOut - Free Psychology Consultation
 
-## Project info
+Welcome to **TalkItOut**, a platform where users can request free psychology consultations from qualified professionals.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## About TalkItOut
 
-## How can I edit this code?
+TalkItOut is dedicated to making mental health support accessible to everyone. Our platform connects individuals seeking psychological guidance with experienced professionals who offer free consultations.
 
-There are several ways of editing your application.
+### Our Mission
 
-**Use Lovable**
+Mental health matters, and everyone deserves access to professional psychological support. TalkItOut breaks down barriers by providing:
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+- **Free consultations** with licensed psychology professionals
+- **Easy booking** through our integrated scheduling system
+- **Confidential and supportive** environment for your mental wellness journey
+- **Accessible care** for anyone who needs someone to talk to
 
-Changes made via Lovable will be committed automatically to this repo.
+## Project Structure
 
-**Use your preferred IDE**
+This is a modern React application built with best practices for maintainability and scalability.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Technologies Used
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- **Vite** - Fast build tool and dev server
+- **TypeScript** - Type-safe development
+- **React** - Component-based UI framework
+- **Tailwind CSS** - Utility-first styling
+- **shadcn-ui** - Beautiful, accessible component library
+- **GSAP** - Smooth animations and transitions
+- **Framer Motion** - React animation library
+- **Calendly Integration** - Seamless appointment booking
 
-Follow these steps:
+### Architecture Principles
+
+This project follows modular design principles:
+
+✅ One component per file  
+✅ Functional components only  
+✅ Small, focused components (Single Responsibility Principle)  
+✅ Reusable custom hooks for shared logic  
+✅ Co-located styles with components  
+✅ TypeScript for type safety  
+✅ Clean code with ESLint and Prettier  
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v16 or higher) - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- npm or yarn
+
+### Installation
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
+# Step 1: Clone the repository
 git clone <YOUR_GIT_URL>
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# Step 2: Navigate to the project directory
+cd talkitout.com
 
-# Step 3: Install the necessary dependencies.
-npm i
+# Step 3: Install dependencies
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Step 4: Start the development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+The application will be available at `http://localhost:5173`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Available Scripts
 
-**Use GitHub Codespaces**
+```sh
+# Development server with hot reload
+npm run dev
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+# Build for production
+npm run build
 
-## What technologies are used for this project?
+# Preview production build
+npm run preview
 
-This project is built with:
+# Run tests
+npm run test
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+# Lint code
+npm run lint
 
-## How can I deploy this project?
+# Format code
+npm run format
+```
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+## Project Structure
 
-## Can I connect a custom domain to my Lovable project?
+```
+src/
+├── components/        # React components
+│   ├── ui/           # Reusable UI components (shadcn-ui)
+│   └── ...           # Feature-specific components
+├── hooks/            # Custom React hooks
+├── lib/              # Utilities and constants
+├── pages/            # Page components
+├── assets/           # Images and static files
+└── main.tsx          # Application entry point
+```
 
-Yes, you can!
+## Deployment
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+The project can be deployed to any static hosting service:
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+- Vercel
+- Netlify
+- GitHub Pages
+- AWS S3 + CloudFront
+
+## Contributing
+
+We welcome contributions! Please follow the coding standards defined in the project's ESLint and Prettier configuration.
+
+## License
+
+© 2026 TalkItOut. All rights reserved.
+
+---
+
+**Need help? Ready to talk?** Book your free consultation today.

@@ -10,15 +10,15 @@ gsap.registerPlugin(ScrollTrigger);
 
 const founders = [
   {
-    name: 'Azra Shamshad',
-    credentials: 'Medical Director',
-    description: 'Azra Shamshad brings extensive medical expertise and a forward-thinking approach to longevity medicine, combining clinical excellence with a deep understanding of preventive health optimization. Her medical background and specialization in evidence-based longevity strategies inform Forseen Health Care\'s commitment to science-backed protocols that move beyond traditional disease management. Azra\'s vision centers on empowering high-performing individuals to view their health as a strategic asset—one that requires the same precision, data-driven analysis, and long-term planning that defines executive decision-making.',
+    name: 'Dr. Azra Shamshad',
+    credentials: 'Clinical Psychologist, PhD',
+    description: 'Dr. Azra Shamshad brings extensive expertise in clinical psychology with a focus on accessible mental health care. Her approach combines evidence-based therapeutic techniques with compassionate, client-centered care. With years of experience in helping individuals navigate anxiety, depression, and life transitions, Dr. Shamshad believes that quality mental health support should be available to everyone, regardless of their financial circumstances. Her warm, non-judgmental approach creates a safe space where clients feel heard and supported on their journey to wellness.',
     image: azraImage,
   },
   {
-    name: 'Reshu Jindal',
-    credentials: 'Strategic Director',
-    description: 'Reshu Jindal brings strategic vision and operational excellence to Forseen Health Care, translating the science of longevity into actionable, personalized protocols for executive clients. Her expertise in bridging medical science with strategic implementation ensures that every client receives a roadmap tailored to their unique biochemistry, lifestyle, and long-term goals. Jindal\'s approach emphasizes the intersection of cutting-edge diagnostics—from ApoB levels to full-genome sequencing and VO2 Max testing—with personalized intervention strategies and persistent counsel that evolves with both advancing science and changing life circumstances.',
+    name: 'Dr. Reshu Jindal',
+    credentials: 'Licensed Psychologist, PsyD',
+    description: 'Dr. Reshu Jindal specializes in cognitive-behavioral therapy and mindfulness-based approaches to mental wellness. Her expertise spans stress management, relationship counseling, and personal development. Dr. Jindal is passionate about breaking down barriers to mental health care and making professional psychological support accessible to all. She believes that everyone deserves a safe space to explore their thoughts and feelings, and her mission with TalkItOut is to provide compassionate, professional guidance to anyone who needs someone to talk to.',
     image: reshuImage,
   },
 ];
@@ -91,10 +91,10 @@ export const FoundersSection = () => {
             ref={headlineRef}
             className="font-heading text-3xl md:text-5xl lg:text-6xl font-light mb-6"
           >
-            The Vision Behind Forseen
+            Meet Our Team
           </h2>
           <p className="font-body text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
-            The expertise and leadership that drive our Medicine 3.0 philosophy
+            Licensed professionals dedicated to making mental health support accessible
           </p>
         </div>
 
@@ -147,10 +147,10 @@ export const FoundersSection = () => {
         {/* Consultation CTA */}
         <div className="mt-20 md:mt-28 text-center">
           <p className="font-body text-lg md:text-xl text-muted-foreground mb-6">
-            Meet the team behind your roadmap. Book a consultation to get started.
+            Ready to start your mental wellness journey? Connect with our team today.
           </p>
           <CalendlyButton url={CALENDLY_URL} variant="primary">
-            Book a Consultation
+            Book Your Free Consultation
           </CalendlyButton>
         </div>
       </div>

@@ -5,10 +5,10 @@ import { CalendlyButton } from './CalendlyButton';
 import { CALENDLY_URL } from '@/lib/constants';
 
 const menuItems = [
-  { label: 'The Vision', href: '#hero' },
-  { label: 'Medicine 3.0', href: '#medicine' },
+  { label: 'Home', href: '#hero' },
+  { label: 'About', href: '#about' },
   { label: 'Services', href: '#services' },
-  { label: 'The Decathlon', href: '#decathlon' },
+  { label: 'Our Team', href: '#founders' },
   { label: 'Contact', href: '#contact' },
 ];
 
@@ -44,9 +44,9 @@ export const Header = () => {
           <a 
             href="#hero" 
             onClick={(e) => { e.preventDefault(); scrollToSection('#hero'); }}
-            className="font-heading text-xl md:text-2xl tracking-[0.3em] font-light"
+            className="font-heading text-xl md:text-2xl tracking-[0.2em] font-light"
           >
-            FORSEEN HEALTH CARE
+            TalkItOut
           </a>
 
           {/* Right side */}
@@ -62,7 +62,7 @@ export const Header = () => {
               variant="primary"
               className="text-sm md:text-base"
             >
-              Book Consultation
+              Free Consultation
             </CalendlyButton>
           </div>
         </div>
@@ -81,8 +81,8 @@ export const Header = () => {
             <div className="flex flex-col h-full px-6 md:px-12 lg:px-24 py-6">
               {/* Menu Header */}
               <div className="flex items-center justify-between">
-                <span className="font-heading text-xl md:text-2xl tracking-[0.3em] font-light">
-                  FORSEEN HEALTH CARE
+                <span className="font-heading text-xl md:text-2xl tracking-[0.2em] font-light">
+                  TalkItOut
                 </span>
                 <button
                   onClick={() => setIsMenuOpen(false)}
@@ -115,10 +115,10 @@ export const Header = () => {
                   variant="primary"
                   className="!text-lg md:!text-xl !px-10 !py-4"
                 >
-                  Book a Consultation
+                  Book Your Free Consultation
                 </CalendlyButton>
                 <p className="font-body text-sm text-muted-foreground tracking-wide">
-                  Science-Backed. Executive-Minded.
+                  Professional. Confidential. Free.
                 </p>
               </div>
             </div>

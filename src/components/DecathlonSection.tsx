@@ -6,30 +6,30 @@ import { CALENDLY_URL } from '@/lib/constants';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const decathlonTasks = [
+const wellnessGoals = [
   {
-    task: 'Lifting a 20kg suitcase into an overhead bin.',
-    science: 'Requires a 10-year strength reserve of 40%. We begin building that reserve today.',
+    task: 'Feel comfortable expressing your emotions openly.',
+    science: 'Emotional expression is a cornerstone of mental health, reducing stress and fostering authentic connections.',
   },
   {
-    task: 'Getting up off the floor using only one limb for support.',
-    science: 'Tests lower body strength and balance—key predictors of fall risk after 70.',
+    task: 'Navigate difficult conversations with confidence.',
+    science: 'Communication skills are fundamental to healthy relationships and self-advocacy.',
   },
   {
-    task: 'A 30-minute brisk walk uphill without breathlessness.',
-    science: 'Indicates cardiovascular health equivalent to someone 15 years younger.',
+    task: 'Recognize and manage anxiety or stress effectively.',
+    science: 'Coping strategies empower you to face challenges without feeling overwhelmed.',
   },
   {
-    task: 'Carrying two bags of groceries up a flight of stairs.',
-    science: 'Functional strength that maintains independence and quality of life.',
+    task: 'Build and maintain meaningful relationships.',
+    science: 'Social connection is one of the strongest predictors of long-term happiness and wellbeing.',
   },
   {
-    task: 'Playing actively with grandchildren for an hour.',
-    science: 'Requires sustained energy, mobility, and joint health we protect now.',
+    task: 'Practice self-compassion during setbacks.',
+    science: 'Self-compassion promotes resilience and reduces negative self-talk that can lead to depression.',
   },
   {
-    task: 'Hiking 5 miles on varied terrain.',
-    science: 'Tests endurance, proprioception, and musculoskeletal integrity.',
+    task: 'Feel hopeful and motivated about your future.',
+    science: 'A sense of purpose and optimism are protective factors against mental health challenges.',
   },
 ];
 
@@ -76,10 +76,10 @@ export const DecathlonSection = () => {
         {/* Header */}
         <div className="px-6 md:px-12 lg:px-24 mb-12 md:mb-16">
           <h2 className="font-heading text-3xl md:text-5xl lg:text-6xl font-light">
-            What do you want to be<br />able to do at 95?
+            Your Mental Wellness<br />Journey
           </h2>
           <p className="font-body text-muted-foreground mt-4 text-lg">
-            The Centenarian Decathlon
+            Goals to work toward together
           </p>
         </div>
 
@@ -88,7 +88,7 @@ export const DecathlonSection = () => {
           ref={scrollerRef}
           className="horizontal-scroll-container pl-6 md:pl-12 lg:pl-24"
         >
-          {decathlonTasks.map((item, index) => (
+          {wellnessGoals.map((item, index) => (
             <div
               key={index}
               className="flex-shrink-0 w-[80vw] md:w-[50vw] lg:w-[40vw] mr-6 md:mr-8"
@@ -104,7 +104,7 @@ export const DecathlonSection = () => {
                 
                 <div className="border-t border-accent/20 pt-6">
                   <p className="font-body text-sm text-muted-foreground italic">
-                    Science Note: {item.science}
+                    Why it matters: {item.science}
                   </p>
                 </div>
               </div>
@@ -115,13 +115,13 @@ export const DecathlonSection = () => {
           <div className="flex-shrink-0 w-[80vw] md:w-[50vw] lg:w-[40vw] mr-6 md:mr-8 flex items-center justify-center">
             <div className="glass-card p-8 md:p-10 lg:p-12 min-h-[300px] flex flex-col items-center justify-center text-center border-2 border-accent/40">
               <p className="font-heading text-xl md:text-2xl lg:text-3xl font-light mb-6">
-                Start preparing today.
+                Start your journey today.
               </p>
               <p className="font-body text-muted-foreground mb-8 max-w-sm">
-                Book a consultation and build your Centenarian Decathlon plan.
+                Connect with a professional and take the first step toward better mental wellness.
               </p>
               <CalendlyButton url={CALENDLY_URL} variant="primary">
-                Book a Consultation
+                Book Your Free Consultation
               </CalendlyButton>
             </div>
           </div>

@@ -7,19 +7,23 @@ import { CALENDLY_URL } from '@/lib/constants';
 gsap.registerPlugin(ScrollTrigger);
 
 const concerns = [
-  'Cardiovascular Health',
-  'Cognitive Longevity',
-  'Cancer Prevention',
-  'Metabolic Optimization',
-  'Performance Enhancement',
-  'General Longevity Strategy',
+  'Anxiety or Stress',
+  'Depression or Low Mood',
+  'Relationship Issues',
+  'Life Transitions',
+  'Work-Life Balance',
+  'Self-Esteem',
+  'Grief or Loss',
+  'General Mental Wellness',
+  'Other',
 ];
 
 const sources = [
-  'Professional Network',
-  'Publication or Media',
-  'Physician Referral',
-  'Industry Event',
+  'Search Engine',
+  'Social Media',
+  'Friend or Family',
+  'Healthcare Provider',
+  'Online Community',
   'Other',
 ];
 
@@ -71,12 +75,12 @@ export const ContactSection = () => {
         {/* Headline */}
         <div className="text-center mb-12 md:mb-16">
           <h2 className="font-heading text-3xl md:text-5xl lg:text-6xl font-light mb-6">
-            Invest in Your Future Self.
+            Take the First Step.
           </h2>
           <p className="font-body text-muted-foreground text-lg leading-relaxed">
-            Goreseen Healthcare operates on a private membership model. 
-            We accept a limited cohort of clients to ensure the depth of 
-            guidance your life demands.
+            Connect with a professional psychologist who can help. 
+            All consultations are completely free and confidential. 
+            You don't have to face challenges alone.
           </p>
         </div>
 
@@ -119,7 +123,7 @@ export const ContactSection = () => {
           {/* Concern Dropdown */}
           <div>
             <label className="block font-body text-sm tracking-wide uppercase mb-3 text-muted-foreground">
-              What is your primary longevity concern?
+              What brings you here today?
             </label>
             <select
               required
@@ -128,7 +132,7 @@ export const ContactSection = () => {
               className="w-full bg-transparent border-b border-foreground/20 py-3 font-body text-lg focus:outline-none focus:border-accent transition-colors cursor-pointer appearance-none"
             >
               <option value="" disabled className="text-muted-foreground">
-                Select a concern
+                Select what you'd like to discuss
               </option>
               {concerns.map((concern) => (
                 <option key={concern} value={concern} className="bg-background text-foreground">
@@ -166,14 +170,14 @@ export const ContactSection = () => {
               type="submit"
               className="btn-elegant w-full md:w-auto"
             >
-              Request a Private Briefing
+              Send My Request
             </button>
             <CalendlyButton 
               url={CALENDLY_URL}
               variant="secondary"
               className="w-full md:w-auto"
             >
-              Book a Consultation
+              Book Free Consultation
             </CalendlyButton>
           </div>
         </form>
