@@ -1,0 +1,112 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(uuid())
+  email     String    @unique
+  password  String
+  name      String
+  role      UserRole
+  phone     String?
+  isActive  Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  customer  Customer?
+  doctor    Doctor?
+
+  @@map("users")
+}
+
+model Doctor {
+  id             String        @id @default(uuid())
+  userId         String        @unique
+  type           DoctorType
+  specialization String?
+  licenseNumber  String?
+  assignedToId   String?       @map("assigned_to_id")
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  appointments   Appointment[]
+  customers      Customer[]    @relation("CustomerIntern")
+  assignedTo     Doctor?       @relation("InternSupervision", fields: [assignedToId], references: [id])
+  interns        Doctor[]      @relation("InternSupervision")
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  timeSlots      TimeSlot[]
+
+  @@map("doctors")
+}
+
+model Customer {
+  id               String        @id @default(uuid())
+  userId           String        @unique
+  assignedInternId String?       @map("assigned_intern_id")
+  dateOfBirth      DateTime?
+  address          String?
+  emergencyContact String?       @map("emergency_contact")
+  notes            String?
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  appointments     Appointment[]
+  assignedIntern   Doctor?       @relation("CustomerIntern", fields: [assignedInternId], references: [id])
+  user             User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("customers")
+}
+
+model TimeSlot {
+  id           String        @id @default(uuid())
+  doctorId     String        @map("doctor_id")
+  startTime    String        @map("start_time")
+  endTime      String        @map("end_time")
+  dayOfWeek    Int           @map("day_of_week")
+  isAvailable  Boolean       @default(true) @map("is_available")
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  appointments Appointment[]
+  doctor       Doctor        @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+
+  @@map("time_slots")
+}
+
+model Appointment {
+  id          String            @id @default(uuid())
+  customerId  String            @map("customer_id")
+  doctorId    String            @map("doctor_id")
+  scheduledBy String            @map("scheduled_by")
+  date        DateTime
+  timeSlotId  String            @map("time_slot_id")
+  status      AppointmentStatus @default(scheduled)
+  notes       String?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  customer    Customer          @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  doctor      Doctor            @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  timeSlot    TimeSlot          @relation(fields: [timeSlotId], references: [id], onDelete: Cascade)
+
+  @@map("appointments")
+}
+
+enum UserRole {
+  admin
+  therapist
+  intern
+  customer
+}
+
+enum DoctorType {
+  therapist
+  intern
+}
+
+enum AppointmentStatus {
+  scheduled
+  completed
+  cancelled
+  no_show
+}

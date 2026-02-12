@@ -1,0 +1,38 @@
+# Simplified Single-Stage Dockerfile
+# Use this if multi-stage build has issues
+
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Install dependencies for Prisma
+RUN apk add --no-cache openssl libc6-compat wget
+
+# Copy package files and install
+COPY package*.json ./
+RUN npm install
+
+# Copy prisma schema
+COPY prisma ./prisma/
+
+# Generate Prisma Client
+RUN npx prisma generate
+
+# Copy all source code
+COPY . .
+
+# Build the application
+RUN npm run build
+
+# Verify build
+RUN ls -la dist/
+
+# Expose port
+EXPOSE 3001
+
+# Copy and set up entrypoint
+COPY docker-entrypoint.sh /app/
+RUN chmod +x /app/docker-entrypoint.sh
+
+# Start the application
+ENTRYPOINT ["/app/docker-entrypoint.sh"]

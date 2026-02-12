@@ -1,7 +1,13 @@
 # Build stage
-FROM --platform=linux/amd64 node:20-alpine AS builder
+FROM node:20-alpine AS builder
 
 WORKDIR /app
+
+# Accept build args for environment variables
+ARG VITE_API_URL=http://localhost:3001/api
+
+# Set env vars for the build
+ENV VITE_API_URL=$VITE_API_URL
 
 # Copy package files
 COPY package*.json ./
@@ -16,7 +22,7 @@ COPY . .
 RUN npm run build
 
 # Production stage
-FROM --platform=linux/amd64 nginx:alpine
+FROM nginx:alpine
 
 # Copy built assets from builder
 COPY --from=builder /app/dist /usr/share/nginx/html
@@ -24,8 +30,6 @@ COPY --from=builder /app/dist /usr/share/nginx/html
 # Copy nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Expose port 80
 EXPOSE 80
 
-# Start nginx
-CMD ["nginx", "-g", "daemon off;"] 
+CMD ["nginx", "-g", "daemon off;"]
