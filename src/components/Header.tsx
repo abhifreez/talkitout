@@ -1,20 +1,24 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X } from 'lucide-react';
-import { CalendlyButton } from './CalendlyButton';
-import { CALENDLY_URL } from '@/lib/constants';
+import { X, LogOut, User as UserIcon, Menu } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
+import { Link, useNavigate } from 'react-router-dom';
 
 const menuItems = [
-  { label: 'Home', href: '#hero' },
-  { label: 'About', href: '#about' },
-  { label: 'Services', href: '#services' },
-  { label: 'Our Team', href: '#founders' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Home', href: '/' },
+  { label: 'About', href: '/#about' },
+  { label: 'Services', href: '/#services' },
+  { label: 'Founder', href: '/#founders' },
+
+  { label: 'Book Intern', href: '/book-intern' },
+  { label: 'Contact', href: '/#contact' },
 ];
 
 export const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user, logout, isAuthenticated } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,46 +28,61 @@ export const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToSection = (href: string) => {
+  const handleNavClick = (href: string) => {
     setIsMenuOpen(false);
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+    if (href.startsWith('/#')) {
+      const id = href.substring(2);
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        navigate(href);
+      }
+    } else {
+      navigate(href);
     }
   };
 
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          isScrolled ? 'header-blur bg-background/80' : 'bg-transparent'
-        }`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? 'header-blur bg-background/80' : 'bg-transparent'
+          }`}
       >
         <div className="flex items-center justify-between px-6 md:px-12 lg:px-24 py-6">
           {/* Logo */}
-          <a 
-            href="#hero" 
-            onClick={(e) => { e.preventDefault(); scrollToSection('#hero'); }}
+          <Link
+            to="/"
             className="font-heading text-xl md:text-2xl tracking-[0.2em] font-light"
           >
             TalkItOut
-          </a>
+          </Link>
 
           {/* Right side */}
-          <div className="flex items-center gap-8">
+          <div className="flex items-center gap-4 md:gap-8">
             <button
               onClick={() => setIsMenuOpen(true)}
-              className="elegant-underline font-body text-sm tracking-[0.15em] uppercase font-light"
+              className="p-2 hover:text-accent transition-colors"
             >
-              Menu
+              <Menu className="w-6 h-6" strokeWidth={1} />
             </button>
-            <CalendlyButton 
-              url={CALENDLY_URL}
-              variant="primary"
-              className="text-sm md:text-base"
-            >
-              Free Consultation
-            </CalendlyButton>
+
+            <div className="hidden md:flex items-center gap-4">
+              {isAuthenticated && (
+                <div className="flex items-center gap-4">
+                  <span className="text-sm font-body font-light text-muted-foreground">
+                    Hello, {user?.name.split(' ')[0]}
+                  </span>
+                  <button
+                    onClick={() => logout()}
+                    className="p-2 hover:text-accent transition-colors"
+                    title="Logout"
+                  >
+                    <LogOut className="w-5 h-5" strokeWidth={1} />
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </header>
@@ -100,7 +119,7 @@ export const Header = () => {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1, duration: 0.5 }}
-                    onClick={() => scrollToSection(item.href)}
+                    onClick={() => handleNavClick(item.href)}
                     className="font-heading text-3xl md:text-5xl lg:text-6xl font-light tracking-wide elegant-underline"
                   >
                     {item.label}
@@ -108,17 +127,38 @@ export const Header = () => {
                 ))}
               </nav>
 
-              {/* Menu Footer — Consultation CTA */}
-              <div className="text-center space-y-6">
-                <CalendlyButton
-                  url={CALENDLY_URL}
-                  variant="primary"
-                  className="!text-lg md:!text-xl !px-10 !py-4"
-                >
-                  Book Your Free Consultation
-                </CalendlyButton>
-                <p className="font-body text-sm text-muted-foreground tracking-wide">
-                  Professional. Confidential. Free.
+              {/* Menu Footer — User Auth */}
+              <div className="text-center pb-12">
+                {!isAuthenticated ? (
+                  <div className="flex flex-col md:flex-row items-center justify-center gap-6">
+                    <Link
+                      to="/login"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="font-heading text-xl md:text-2xl font-light elegant-underline"
+                    >
+                      Login
+                    </Link>
+                    <Link
+                      to="/login?mode=signup"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="bg-primary text-primary-foreground px-12 py-4 rounded-sm text-lg md:text-xl font-light hover:opacity-90 transition-all"
+                    >
+                      Sign Up
+                    </Link>
+                  </div>
+                ) : (
+                  <div className="flex flex-col items-center gap-4">
+                    <p className="font-body text-muted-foreground text-lg">Logged in as {user?.email}</p>
+                    <button
+                      onClick={() => { logout(); setIsMenuOpen(false); }}
+                      className="flex items-center gap-2 font-heading text-xl md:text-2xl font-light elegant-underline"
+                    >
+                      <LogOut className="w-5 h-5" /> Logout
+                    </button>
+                  </div>
+                )}
+                <p className="mt-8 font-body text-sm text-muted-foreground tracking-wide">
+                  Professional. Confidential. Accessible.
                 </p>
               </div>
             </div>

@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Link } from 'react-router-dom';
 import { Heart, MessageCircle, Shield } from 'lucide-react';
-import { CalendlyButton } from './CalendlyButton';
-import { CALENDLY_URL } from '@/lib/constants';
+import { Button } from './ui/button';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -94,11 +94,11 @@ export const ServicesSection = () => {
               <div className="w-14 h-14 rounded-full border border-accent/30 flex items-center justify-center mb-8 group-hover:border-accent group-hover:bg-accent/5 transition-all duration-500">
                 <Icon className="w-7 h-7 text-accent" strokeWidth={1} />
               </div>
-              
+
               <h3 className="font-heading text-2xl md:text-3xl font-light mb-4 group-hover:text-accent transition-colors duration-500">
                 {title}
               </h3>
-              
+
               <p className="font-body text-muted-foreground leading-relaxed mt-auto">
                 {description}
               </p>
@@ -111,9 +111,11 @@ export const ServicesSection = () => {
           <p className="font-body text-lg md:text-xl text-muted-foreground mb-6 max-w-2xl mx-auto">
             Ready to take the first step toward better mental wellness? Connect with a professional today.
           </p>
-          <CalendlyButton url={CALENDLY_URL} variant="primary">
-            Schedule Your Free Consultation
-          </CalendlyButton>
+          <Link to="/book-appointment">
+            <Button size="lg" className="text-lg px-8 py-6">
+              Schedule Your Free Consultation
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

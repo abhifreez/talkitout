@@ -1,8 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { CalendlyButton } from './CalendlyButton';
-import { CALENDLY_URL } from '@/lib/constants';
+import { Link } from 'react-router-dom';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -29,41 +28,7 @@ const sources = [
 
 export const ContactSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
-  const formRef = useRef<HTMLFormElement>(null);
-  const [formData, setFormData] = useState({
-    concern: '',
-    source: '',
-    name: '',
-    email: '',
-  });
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        formRef.current,
-        { opacity: 0, y: 40 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1,
-          scrollTrigger: {
-            trigger: formRef.current,
-            start: 'top 80%',
-            toggleActions: 'play none none reverse',
-          },
-        }
-      );
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle form submission
-    console.log('Form submitted:', formData);
-    alert('Thank you for your inquiry. We will be in touch shortly.');
-  };
 
   return (
     <section
@@ -78,110 +43,23 @@ export const ContactSection = () => {
             Take the First Step.
           </h2>
           <p className="font-body text-muted-foreground text-lg leading-relaxed">
-            Connect with a professional psychologist who can help. 
-            All consultations are completely free and confidential. 
+            Connect with a professional psychologist who can help.
+            All consultations are completely free and confidential.
             You don't have to face challenges alone.
           </p>
         </div>
 
-        {/* Form */}
-        <form
-          ref={formRef}
-          onSubmit={handleSubmit}
-          className="space-y-8"
-        >
-          {/* Name */}
-          <div>
-            <label className="block font-body text-sm tracking-wide uppercase mb-3 text-muted-foreground">
-              Your Name
-            </label>
-            <input
-              type="text"
-              required
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              className="w-full bg-transparent border-b border-foreground/20 py-3 font-body text-lg focus:outline-none focus:border-accent transition-colors"
-              placeholder="Full name"
-            />
-          </div>
-
-          {/* Email */}
-          <div>
-            <label className="block font-body text-sm tracking-wide uppercase mb-3 text-muted-foreground">
-              Email Address
-            </label>
-            <input
-              type="email"
-              required
-              value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              className="w-full bg-transparent border-b border-foreground/20 py-3 font-body text-lg focus:outline-none focus:border-accent transition-colors"
-              placeholder="your@email.com"
-            />
-          </div>
-
-          {/* Concern Dropdown */}
-          <div>
-            <label className="block font-body text-sm tracking-wide uppercase mb-3 text-muted-foreground">
-              What brings you here today?
-            </label>
-            <select
-              required
-              value={formData.concern}
-              onChange={(e) => setFormData({ ...formData, concern: e.target.value })}
-              className="w-full bg-transparent border-b border-foreground/20 py-3 font-body text-lg focus:outline-none focus:border-accent transition-colors cursor-pointer appearance-none"
-            >
-              <option value="" disabled className="text-muted-foreground">
-                Select what you'd like to discuss
-              </option>
-              {concerns.map((concern) => (
-                <option key={concern} value={concern} className="bg-background text-foreground">
-                  {concern}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Source Dropdown */}
-          <div>
-            <label className="block font-body text-sm tracking-wide uppercase mb-3 text-muted-foreground">
-              How did you hear about us?
-            </label>
-            <select
-              required
-              value={formData.source}
-              onChange={(e) => setFormData({ ...formData, source: e.target.value })}
-              className="w-full bg-transparent border-b border-foreground/20 py-3 font-body text-lg focus:outline-none focus:border-accent transition-colors cursor-pointer appearance-none"
-            >
-              <option value="" disabled className="text-muted-foreground">
-                Select a source
-              </option>
-              {sources.map((source) => (
-                <option key={source} value={source} className="bg-background text-foreground">
-                  {source}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Submit Button */}
-          <div className="pt-8 flex flex-col md:flex-row gap-4">
-            <button
-              type="submit"
-              className="btn-elegant w-full md:w-auto"
-            >
-              Send My Request
-            </button>
-            <CalendlyButton 
-              url={CALENDLY_URL}
-              variant="secondary"
-              className="w-full md:w-auto"
-            >
-              Book Free Consultation
-            </CalendlyButton>
-          </div>
-        </form>
+        {/* Call to Action Button */}
+        <div className="flex justify-center mt-12">
+          <Link
+            to="/book-appointment"
+            className="btn-elegant w-full md:w-auto text-center px-12 py-4 text-lg hover:border-accent hover:text-accent transition-all duration-500"
+          >
+            Book Free Consultation
+          </Link>
+        </div>
       </div>
     </section>
   );
 };
+

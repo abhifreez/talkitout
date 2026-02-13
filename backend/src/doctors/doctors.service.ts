@@ -73,10 +73,10 @@ export class DoctorsService {
     return { success: true, data: doctor };
   }
 
-  async findAll(user: any) {
+  async findAll(user?: any) {
     let whereClause: any = {};
 
-    if (user.role !== UserRole.admin) {
+    if (user && user.role !== UserRole.admin) {
       if (user.role === UserRole.therapist) {
         // Therapist sees own profile and interns' profiles
         const doctor = await this.prisma.doctor.findUnique({
@@ -93,6 +93,10 @@ export class DoctorsService {
       } else {
         whereClause = { userId: user.id };
       }
+    } else if (!user) {
+      // Public view: show all active doctors? 
+      // For now, show all to match the user's "open endpoint" request
+      whereClause = {};
     }
 
     const doctors = await this.prisma.doctor.findMany({

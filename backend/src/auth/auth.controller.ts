@@ -7,12 +7,18 @@ import { JwtAuthGuard } from './guards/jwt-auth.guard';
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) { }
 
   @Post('login')
   @ApiOperation({ summary: 'Login user' })
   async login(@Body() loginDto: LoginDto) {
     return this.authService.login(loginDto);
+  }
+
+  @Post('signup')
+  @ApiOperation({ summary: 'Signup new user' })
+  async signup(@Body() createUserDto: any) {
+    return this.authService.signup(createUserDto);
   }
 
   @Get('validate')

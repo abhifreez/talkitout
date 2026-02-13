@@ -1,8 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { CalendlyButton } from './CalendlyButton';
-import { CALENDLY_URL } from '@/lib/constants';
+import { Link } from 'react-router-dom';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -97,11 +96,11 @@ export const DecathlonSection = () => {
                 <span className="font-heading text-6xl md:text-7xl text-accent/30 mb-4">
                   {String(index + 1).padStart(2, '0')}
                 </span>
-                
+
                 <h3 className="font-heading text-xl md:text-2xl lg:text-3xl font-light mb-6 flex-1">
                   {item.task}
                 </h3>
-                
+
                 <div className="border-t border-accent/20 pt-6">
                   <p className="font-body text-sm text-muted-foreground italic">
                     Why it matters: {item.science}
@@ -120,12 +119,15 @@ export const DecathlonSection = () => {
               <p className="font-body text-muted-foreground mb-8 max-w-sm">
                 Connect with a professional and take the first step toward better mental wellness.
               </p>
-              <CalendlyButton url={CALENDLY_URL} variant="primary">
+              <Link
+                to="/book-appointment"
+                className="btn-elegant bg-primary text-primary-foreground hover:bg-primary/90"
+              >
                 Book Your Free Consultation
-              </CalendlyButton>
+              </Link>
             </div>
           </div>
-          
+
           {/* Spacer at end */}
           <div className="flex-shrink-0 w-24" />
         </div>
@@ -133,3 +135,4 @@ export const DecathlonSection = () => {
     </section>
   );
 };
+

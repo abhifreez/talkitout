@@ -1,25 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import azraImage from '@/assets/azra.jpeg';
-import reshuImage from '@/assets/reshu.jpeg';
-import { CalendlyButton } from './CalendlyButton';
-import { CALENDLY_URL } from '@/lib/constants';
+import { Link } from 'react-router-dom';
+import ceoImage from '@/assets/ceo-profile.jpeg';
+import { Button } from './ui/button';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const founders = [
   {
-    name: 'Dr. Azra Shamshad',
-    credentials: 'Clinical Psychologist, PhD',
-    description: 'Dr. Azra Shamshad brings extensive expertise in clinical psychology with a focus on accessible mental health care. Her approach combines evidence-based therapeutic techniques with compassionate, client-centered care. With years of experience in helping individuals navigate anxiety, depression, and life transitions, Dr. Shamshad believes that quality mental health support should be available to everyone, regardless of their financial circumstances. Her warm, non-judgmental approach creates a safe space where clients feel heard and supported on their journey to wellness.',
-    image: azraImage,
-  },
-  {
-    name: 'Dr. Reshu Jindal',
-    credentials: 'Licensed Psychologist, PsyD',
-    description: 'Dr. Reshu Jindal specializes in cognitive-behavioral therapy and mindfulness-based approaches to mental wellness. Her expertise spans stress management, relationship counseling, and personal development. Dr. Jindal is passionate about breaking down barriers to mental health care and making professional psychological support accessible to all. She believes that everyone deserves a safe space to explore their thoughts and feelings, and her mission with TalkItOut is to provide compassionate, professional guidance to anyone who needs someone to talk to.',
-    image: reshuImage,
+    name: 'Aman Agrawal',
+    credentials: 'CEO & Co-founder',
+    description: 'Aman Agrawal is the visionary CEO and Co-founder of TalkItOut, dedicated to revolutionizing mental health accessibility. With a strong background in technology and healthcare innovation, Aman leads the mission to break down barriers to mental wellness support. His commitment to creating affordable, professional psychological services stems from a deep belief that mental health care is a fundamental right, not a privilege. Under his leadership, TalkItOut combines cutting-edge technology with compassionate care to ensure everyone has access to the support they need.',
+    image: ceoImage,
   },
 ];
 
@@ -91,22 +84,22 @@ export const FoundersSection = () => {
             ref={headlineRef}
             className="font-heading text-3xl md:text-5xl lg:text-6xl font-light mb-6"
           >
-            Meet Our Team
+            Meet Our Founder
           </h2>
           <p className="font-body text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
-            Licensed professionals dedicated to making mental health support accessible
+            A visionary dedicated to making professional mental health support accessible to everyone.
           </p>
         </div>
 
-        {/* Founder Cards */}
+        {/* Founder Card */}
         <div
           ref={cardsRef}
-          className="grid md:grid-cols-2 gap-12 md:gap-16 lg:gap-20"
+          className="flex justify-center"
         >
           {founders.map((founder, index) => (
             <div
               key={founder.name}
-              className="founder-card glass-card p-8 md:p-10 lg:p-12 flex flex-col group cursor-default"
+              className="founder-card glass-card p-8 md:p-10 lg:p-12 grid md:grid-cols-2 gap-8 md:gap-12 items-center group cursor-default max-w-5xl mx-auto"
               onMouseMove={handleMouseMove}
               style={{
                 '--mouse-x': `${mousePos.x}%`,
@@ -114,8 +107,8 @@ export const FoundersSection = () => {
               } as React.CSSProperties}
             >
               {/* Portrait Image */}
-              <div className="mb-6 md:mb-8">
-                <div className="relative w-full aspect-[3/4] max-w-[280px] mx-auto overflow-hidden rounded-sm">
+              <div className="w-full">
+                <div className="relative w-full aspect-[3/4] max-w-[320px] mx-auto md:mx-0 overflow-hidden rounded-sm">
                   <img
                     src={founder.image}
                     alt={founder.name}
@@ -126,33 +119,27 @@ export const FoundersSection = () => {
                 </div>
               </div>
 
-              {/* Name */}
-              <h3 className="font-heading text-3xl md:text-4xl lg:text-5xl font-light tracking-wide mb-3 text-center">
-                {founder.name}
-              </h3>
+              {/* Text Content */}
+              <div className="text-center md:text-left">
+                {/* Name */}
+                <h3 className="font-heading text-3xl md:text-4xl lg:text-5xl font-light tracking-wide mb-3">
+                  {founder.name}
+                </h3>
 
-              {/* Credentials */}
-              <p className="font-body text-sm md:text-base uppercase tracking-[0.15em] text-muted-foreground text-center mb-6">
-                {founder.credentials}
-              </p>
+                {/* Credentials */}
+                <p className="font-body text-sm md:text-base uppercase tracking-[0.15em] text-muted-foreground mb-6">
+                  {founder.credentials}
+                </p>
 
-              {/* Description */}
-              <p className="font-body text-base md:text-lg font-light leading-relaxed text-muted-foreground text-center">
-                {founder.description}
-              </p>
+                {/* Description */}
+                <p className="font-body text-base md:text-lg font-light leading-relaxed text-muted-foreground">
+                  {founder.description}
+                </p>
+              </div>
             </div>
           ))}
         </div>
 
-        {/* Consultation CTA */}
-        <div className="mt-20 md:mt-28 text-center">
-          <p className="font-body text-lg md:text-xl text-muted-foreground mb-6">
-            Ready to start your mental wellness journey? Connect with our team today.
-          </p>
-          <CalendlyButton url={CALENDLY_URL} variant="primary">
-            Book Your Free Consultation
-          </CalendlyButton>
-        </div>
       </div>
     </section>
   );

@@ -75,6 +75,13 @@ export const authApi = {
       },
     });
   },
+
+  signup: async (data: CreateUserForm): Promise<ApiResponse<AuthUser>> => {
+    return apiRequest<AuthUser>('/auth/signup', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  },
 };
 
 // Users API

@@ -9,7 +9,7 @@ export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
-  ) {}
+  ) { }
 
   async validateUser(email: string, password: string): Promise<any> {
     const user = await this.usersService.findByEmail(email);
@@ -34,6 +34,28 @@ export class AuthService {
 
   async login(loginDto: LoginDto) {
     const user = await this.validateUser(loginDto.email, loginDto.password);
+
+    const payload = {
+      sub: user.id,
+      email: user.email,
+      role: user.role,
+    };
+
+    return {
+      success: true,
+      data: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        role: user.role,
+        token: this.jwtService.sign(payload),
+      },
+    };
+  }
+
+  async signup(createUserDto: any) {
+    const result = await this.usersService.create(createUserDto);
+    const user = result.data;
 
     const payload = {
       sub: user.id,

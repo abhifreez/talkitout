@@ -9,7 +9,10 @@ import { ProtectedRoute } from "@/components/admin/ProtectedRoute";
 import AdminLayout from "@/components/admin/AdminLayout";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import Login from "./pages/admin/Login";
+import BookAppointment from "./pages/BookAppointment";
+import BookIntern from "./pages/BookIntern";
+import Login from "./pages/Login";
+
 import Dashboard from "./pages/admin/Dashboard";
 import Users from "./pages/admin/Users";
 import Doctors from "./pages/admin/Doctors";
@@ -31,6 +34,10 @@ const App = () => {
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Index />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Navigate to="/login?mode=signup" replace />} />
+              <Route path="/book-appointment" element={<BookAppointment />} />
+              <Route path="/book-intern" element={<BookIntern />} />
 
               {/* Admin Routes */}
               <Route path="/admin/login" element={<Login />} />

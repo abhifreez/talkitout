@@ -72,8 +72,10 @@ export class TimeSlotsService {
         }
     }
 
-    async findByDoctorId(doctorId: string, user: any) {
-        await this.checkDoctorAccess(doctorId, user);
+    async findByDoctorId(doctorId: string, user?: any) {
+        if (user) {
+            await this.checkDoctorAccess(doctorId, user);
+        }
 
         const slots = await this.prisma.timeSlot.findMany({
             where: { doctorId },
@@ -104,6 +106,10 @@ export class TimeSlotsService {
     }
 
     private async checkDoctorAccess(doctorId: string, user: any) {
+        if (!user) {
+            throw new ForbiddenException('User session not found');
+        }
+
         if (user.role === UserRole.admin) return;
 
         const requesterDoctor = await this.prisma.doctor.findUnique({

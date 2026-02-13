@@ -15,6 +15,7 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { UserRole } from '@prisma/client';
+import { Public } from '../auth/decorators/public.decorator';
 
 @ApiTags('time-slots')
 @Controller('time-slots')
@@ -38,6 +39,7 @@ export class TimeSlotsController {
     }
 
     @Get('doctor/:doctorId')
+    @Public()
     @ApiOperation({ summary: 'Get all time slots for a doctor' })
     findByDoctorId(@Param('doctorId') doctorId: string, @Request() req) {
         return this.timeSlotsService.findByDoctorId(doctorId, req.user);

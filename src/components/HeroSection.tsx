@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
+import { Link } from 'react-router-dom';
 import heroImage from '@/assets/hero-mountains.jpg';
-import { CalendlyButton } from './CalendlyButton';
-import { CALENDLY_URL } from '@/lib/constants';
+import { Button } from './ui/button';
 
 export const HeroSection = () => {
   const headlineRef = useRef<HTMLHeadingElement>(null);
@@ -67,7 +67,7 @@ export const HeroSection = () => {
       <div className="relative z-10 text-center px-6 md:px-12 lg:px-24 max-w-5xl mx-auto">
         {/* Text backdrop for better readability */}
         <div className="absolute inset-0 -mx-6 md:-mx-12 bg-background/20 backdrop-blur-sm rounded-2xl" />
-        
+
         <div className="relative">
           <h1
             ref={headlineRef}
@@ -81,16 +81,15 @@ export const HeroSection = () => {
             className="font-body text-lg md:text-xl lg:text-2xl font-light text-foreground/90 max-w-3xl mx-auto leading-relaxed opacity-0 drop-shadow-md"
             style={{ textShadow: '0 2px 15px rgba(0, 0, 0, 0.4), 0 0 30px rgba(0, 0, 0, 0.3)' }}
           >
-            Connect with professional psychologists for free consultations. 
+            Connect with professional psychologists for free consultations.
             Get the support you need, when you need it. Your journey to better mental health starts here.
           </p>
           <div ref={ctaRef} className="opacity-0" style={{ padding: '40px' }}>
-            <CalendlyButton 
-              url={CALENDLY_URL}
-              variant="primary"
-            >
-              Book Your Free Consultation
-            </CalendlyButton>
+            <Link to="/book-appointment">
+              <Button size="lg" className="text-lg px-8 py-6">
+                Book Your Free Consultation
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
